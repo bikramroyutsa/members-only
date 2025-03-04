@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs", {btn: false}) %>
+    <h1>Sign up</h1>
+    <%- include("partials/errors.ejs") %>
+    <form action="/sign-up" method="POST">
+      <label for="username">Username: </label>
+      <input type="text" name="username" id="username" />
+      <label for="email">Email: </label>
+      <input type="email" name="email" id="email" />
+      <label for="password">Password: </label>
+      <input type="password" name="password" id="password" />
+      <button>Sign Up</button>
+    </form>
+  </body>
+</html>

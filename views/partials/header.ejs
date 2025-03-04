@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="./styles/index.css" />
+<div class="header">
+  <div class="header-title" onclick="goToHome('')">Members Only</div>
+  <% if(btn){ %>
+  <form action="/log-in" method="GET">
+    <button>Log in</button>
+  </form>
+  <% }%>
+</div>
+
+<script>
+  function goToHome(link) {
+    window.location.href = `/${link}`;
+  }
+</script>
