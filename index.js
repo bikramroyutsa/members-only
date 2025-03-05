@@ -7,24 +7,24 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import pool from "./db/pool.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 dotenv.config();
 const app = express();
 
-
-import flash from "connect-flash"
-app.use(flash());
-
+import flash from "connect-flash";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const assetspath = path.join(__dirname, "public");
 app.use(express.static(assetspath));
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(flash());
 app.use(passport.session());
+app.use(express.json()); // For JSON data
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/", indexRouter);
 
 passport.use(
@@ -40,9 +40,9 @@ passport.use(
       }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        return done(null, false, { message: "Incorrect password" })
+        return done(null, false, { message: "Incorrect password" });
       }
-      
+
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -65,9 +65,12 @@ passport.deserializeUser(async (id, done) => {
     done(err);
   }
 });
+app.use((req, res, next) => {
+  res.status(404).render("404"); // Render the 404.ejs template
+});
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send("Something broke!");
 });
 app.listen(3000, () => {
   console.log("Listening on port 3000");

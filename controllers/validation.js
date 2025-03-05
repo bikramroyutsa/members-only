@@ -22,5 +22,12 @@ const validateUser = [
     .trim()
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters"),
+
 ];
-export default validateUser;
+const validateAdmin = [
+  body("passkey")
+  .trim()
+  .notEmpty()
+  .withMessage("Enter the passkey")
+]
+export {validateAdmin, validateUser}

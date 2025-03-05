@@ -7,11 +7,39 @@
     <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body>
-    <%- include("./partials/header.ejs", {btn: true}) %>
-    <% if (locals.user) {%>
+    <%- include("./partials/header.ejs", {btn: true}) %> <% if (locals.user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>
-    <a href="/log-out">LOG OUT</a>
+    <% if(locals.user.isadmin){ %>
+    <div>You are an admin</div>
+    <% } else{%>
+    <form action="/admin" method="GET">
+      <button>Become Admin</button>
+    </form>
     <% } %>
+    <a href="/log-out">LOG OUT</a>
+    <div class="messages">
+      <form action="/new-message" method="POST">
+        <label for="message">Message: </label>
+        <input type="text" name="message" id="message" />
+        <button>Add</button>
+      </form>
+    </div>
+    <% } %> <% if(locals.messages) {%>
+    <h2>Messages:</h2>
+    <% locals.messages.map(message => { %>
+    <div class="message">
+      <div style="font-weight: bold; font-size: 1.2rem">
+        <%= message.message %>
+      </div>
+      <div>Created at: <%= message.created_at %></div>
+      <% if(locals.user){ %>
+      <div>User ID: <%= message.user_id %></div>
+      <% if(locals.user.isadmin){ %>
+      <form action="/<%= message.id %>/delete" method="post">
+        <button>Delete</button>
+      </form>
+      <% } %> <% } %>
+    </div>
+    <% }); %> <% } %>
   </body>
 </html>
-

@@ -14,7 +14,10 @@
       <p><%= message %></p>
       <% }); %>
     </div>
-    <% } %>
+    <% } %> <% if(locals.user){ %>
+    <div>Already logged in</div>
+    <a href="/">Back to home</a>
+    <% } else{ %>
     <form action="/log-in" method="post">
       <label for="username">Username: </label>
       <input type="text" name="username" , id="username" />
@@ -26,5 +29,6 @@
     <form action="sign-up" method="get">
       <button>Sign Up</button>
     </form>
+    <% } %>
   </body>
 </html>
