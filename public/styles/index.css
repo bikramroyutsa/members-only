@@ -1,8 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap");
+:root {
+  --body: #021526;
+  --message: var(--body);
+  --text: #d2d2d2;
+  --message-border: rgb(19, 54, 96);
+  --button-bg: rgb(1, 34, 75);
+  --button-text: var(--text);
+  --header-title: #e2e2b6;
+}
+html {
+  font-family: "DM Sans";
+  color: var(--text);
+}
+body {
+  margin: 0px;
+  background-color: var(--body);
+}
+.main {
+  padding-left: 16px;
+  padding-right: 16px;
+}
 .header {
   display: flex;
   justify-content: space-between;
+  font-family: "DM Serif Display";
+  padding: 16px;
+  align-items: center;
 }
-.header-title{
-    font-weight: bold;
-    cursor: pointer;
+.header-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.messages-title {
+  font-size: 1rem;
+}
+.message-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.messages-container {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.message {
+  padding: 16px;
+  -webkit-box-shadow: 7px 8px 5px -3px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 7px 8px 5px -3px rgba(0, 0, 0, 0.47);
+  box-shadow: 7px 8px 5px -3px rgba(0, 0, 0, 0.47);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--message);
+  border: 1px solid var(--message-border);
+  border-radius: 8px;
+}
+button {
+  all: unset;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 4px 8px 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.message-delete-btn {
+  padding: 4px 8px 4px 8px;
+}
+.welcome-text {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+input {
+  all: unset;
+  background-color: var(--body);
+  color: var(--text);
+  border: 2px solid;
+  border-radius: 8px;
+  border-color: var(--message-border);
+}
+.messages-title {
+  font-size: 1.5rem;
+  margin: 8px;
+}
+.log-in-text,
+.sign-up-text {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }

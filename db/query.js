@@ -18,11 +18,27 @@ const query = (() => {
       [user_id, message]
     );
   }
+  async function getUsernameById(id) {
+    const { rows } = await pool.query(
+      `
+      SELECT username FROM users WHERE id = $1
+      `,
+      [id]
+    );
+    return rows[0].username;
+  }
   async function getAllMessages() {
-    const { rows } = await pool.query(`
-      SELECT * FROM messages
-      `);
-    return rows;
+    const { rows } = await pool.query(`SELECT * FROM messages`);
+
+    const messagesWithUsernames = await Promise.all(
+      rows.map(async (message) => {
+        const user_id = message.user_id;
+        const username = await getUsernameById(user_id);
+        return { ...message, created_by: username }; // Create a new object with created_by
+      })
+    );
+
+    return messagesWithUsernames;
   }
   return { addNewUser, addMessage, getAllMessages };
 })();

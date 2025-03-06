@@ -10,7 +10,7 @@ indexRouter.use(express.urlencoded({ extended: true }));
 
 indexRouter.get("/", async (req, res) => {
   const messages = await query.getAllMessages();
-  // console.log(messages);
+  console.log(messages);
   res.render("index", { user: req.user, messages: messages });
 });
 indexRouter.get("/log-in", (req, res) => {

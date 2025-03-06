@@ -4,31 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log in</title>
+    <link rel="stylesheet" href="/styles/index.css" />
   </head>
   <body>
     <%- include("./partials/header.ejs", {btn: false}) %>
-    <h1>Log in</h1>
-    <% if (messages.length > 0) { %>
-    <div class="error">
-      <% messages.forEach(message => { %>
-      <p><%= message %></p>
-      <% }); %>
+    <div class="main">
+      <div class="log-in-text">Log in</div>
+      <% if (messages.length > 0) { %>
+      <div class="error">
+        <% messages.forEach(message => { %>
+        <p><%= message %></p>
+        <% }); %>
+      </div>
+      <% } %> <% if(locals.user){ %>
+      <div>Already logged in</div>
+      <a href="/">Back to home</a>
+      <% } else{ %>
+      <form action="/log-in" method="post">
+        <label for="username">Username: </label>
+        <input type="text" name="username" , id="username" />
+        <label for="password">Password: </label>
+        <input type="text" id="password" name="password" />
+        <button>Log in</button>
+      </form>
+      <div>Don't have an account?</div>
+      <form action="sign-up" method="get">
+        <button>Sign Up</button>
+      </form>
+      <% } %>
     </div>
-    <% } %> <% if(locals.user){ %>
-    <div>Already logged in</div>
-    <a href="/">Back to home</a>
-    <% } else{ %>
-    <form action="/log-in" method="post">
-      <label for="username">Username: </label>
-      <input type="text" name="username" , id="username" />
-      <label for="password">Password: </label>
-      <input type="text" id="password" name="password" />
-      <button>Log in</button>
-    </form>
-    <div>Don't have an account?</div>
-    <form action="sign-up" method="get">
-      <button>Sign Up</button>
-    </form>
-    <% } %>
   </body>
 </html>
