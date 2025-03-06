@@ -10,25 +10,30 @@
     <%- include("./partials/header.ejs", {btn: true}) %>
     <div class="main">
       <% if (locals.user) {%>
-      <div class="welcome-text">Welcome Back <%= user.username %></div>
-      <% if(locals.user.isadmin){ %>
-      <div>You are an admin. You can manage everyone's messages</div>
-      <% } else{%>
-      <form action="/admin" method="GET">
-        <button>Become Admin</button>
-      </form>
-      <% } %>
-      <a href="/log-out">
-        <button>LOG OUT</button>
-      </a>
-      <div class="messages">
-        <form action="/new-message" method="POST">
-          <label for="message">Message: </label>
-          <input type="text" name="message" id="message" />
-          <button>Add</button>
-        </form>
+      <div class="control-panel">
+        <div class="control-user-section">
+          <div class="welcome-text">Welcome Back <%= user.username %></div>
+          <% if(locals.user.isadmin){ %>
+          <div>You are an admin. You can manage everyone's messages</div>
+          <% } else{%>
+          <form action="/admin" method="GET">
+            <button>Become Admin</button>
+          </form>
+          <% } %>
+          <a href="/log-out">
+            <button>LOG OUT</button>
+          </a>
+            </div>
+        <div class="message-add-section">
+          <form class="message-form" action="/new-message" method="POST">
+            <label for="message">Message: </label>
+            <textarea type="text" name="message" id="message" />Message</textarea>
+            <button>Add</button>
+          </form>
+        </div>
       </div>
-      <% } %> <% if(locals.messages) {%>
+      <% } %> 
+      <% if(locals.messages) {%>
       <div class="messages-title">Messages:</div>
       <div class="messages-container">
         <% locals.messages.map(message => { %>
@@ -40,8 +45,13 @@
           <div>Created by: <%= message.created_by%></div>
 
           <% if(locals.user.isadmin){ %>
-          <form action="/<%= message.id %>/delete" method="post">
-            <button class="message-delete-btn">Delete</button>
+          <form action="/<%= message.id %>/delete" method="POST">
+            <button
+              class="message-delete-btn"
+              onclick="return confirm('Are you sure to delete this message?')"
+            >
+              Delete
+            </button>
           </form>
           <% } else if (locals.user.id == message.user_id){ %>
           <form action="/<%= message.id %>/delete" method="post">

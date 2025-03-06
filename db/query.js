@@ -40,7 +40,15 @@ const query = (() => {
 
     return messagesWithUsernames;
   }
-  return { addNewUser, addMessage, getAllMessages };
+  async function deleteMessage(id) {
+    await pool.query(
+      `
+      DELETE FROM messages WHERE id = $1
+      `,
+      [id]
+    );
+  }
+  return { addNewUser, addMessage, getAllMessages, deleteMessage };
 })();
 
 export default query;

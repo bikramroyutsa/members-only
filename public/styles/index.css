@@ -66,6 +66,7 @@ button {
   padding: 4px 8px 4px 8px;
   border-radius: 8px;
   cursor: pointer;
+  width: fit-content;
 }
 .message-delete-btn {
   padding: 4px 8px 4px 8px;
@@ -83,6 +84,14 @@ input {
   border-radius: 8px;
   border-color: var(--message-border);
 }
+textarea {
+  background-color: var(--body);
+  color: var(--text);
+  border: 2px solid;
+  border-radius: 8px;
+  border-color: var(--message-border);
+  width: fit-content;
+}
 .messages-title {
   font-size: 1.5rem;
   margin: 8px;
@@ -92,4 +101,13 @@ input {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+}
+.message-form {
+  display: flex;
+  flex-direction: column;
+}
+.control-panel {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
 }

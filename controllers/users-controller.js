@@ -27,7 +27,6 @@ const usersController = (() => {
         res.status(400).json({ errors: errors.array() });
       }
       const { passkey } = req.body;
-      // console.log(req.user)
       const userId = req.user.id;
       if (passkey == "abcdef") {
         await pool.query(`UPDATE users SET isadmin = TRUE WHERE id = $1;`, [

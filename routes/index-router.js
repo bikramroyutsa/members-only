@@ -2,15 +2,10 @@ import { Router } from "express";
 export const indexRouter = Router();
 import passport from "passport";
 import usersController from "../controllers/users-controller.js";
-import express from "express";
 import query from "../db/query.js";
-
-indexRouter.use(express.json()); // For JSON data
-indexRouter.use(express.urlencoded({ extended: true }));
 
 indexRouter.get("/", async (req, res) => {
   const messages = await query.getAllMessages();
-  console.log(messages);
   res.render("index", { user: req.user, messages: messages });
 });
 indexRouter.get("/log-in", (req, res) => {
@@ -43,8 +38,11 @@ indexRouter.post("/admin", usersController.makeUserAdmin);
 
 indexRouter.post("/new-message", async (req, res) => {
   const { message } = req.body;
-  console.log(req.user);
-
   await query.addMessage(message, req.user.id);
+  res.redirect("/");
+});
+indexRouter.post("/:id/delete", async (req, res) => {
+  const id = req.params.id;
+  await query.deleteMessage(id);
   res.redirect("/");
 });
