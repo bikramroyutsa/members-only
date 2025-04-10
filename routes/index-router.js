@@ -1,6 +1,6 @@
 import { Router } from "express";
 export const indexRouter = Router();
-import passport from "passport";
+
 import usersController from "../controllers/users-controller.js";
 import query from "../db/query.js";
 
@@ -18,14 +18,7 @@ indexRouter.get("/sign-up", (req, res) =>
 );
 
 indexRouter.post("/sign-up", usersController.handleSignUp);
-indexRouter.post(
-  "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/log-in",
-    failureFlash: true,
-  })
-);
+indexRouter.post("/log-in", usersController.handleLogin);
 indexRouter.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {

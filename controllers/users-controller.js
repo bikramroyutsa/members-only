@@ -1,9 +1,26 @@
-import { validateUser, validateAdmin } from "./validation.js";
+import { validateUser, validateAdmin, validateLogin } from "./validation.js";
 import { validationResult } from "express-validator";
 import query from "../db/query.js";
 import bcrypt, { compare } from "bcrypt";
 import pool from "../db/pool.js";
+import passport from "passport";
 const usersController = (() => {
+  const handleLogin = [
+    validateLogin,
+    async (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).render("log-in-form", {
+          errors: errors.array(),
+        });
+      }
+      passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/log-in",
+        failureFlash: true,
+      })(req, res, next);
+    },
+  ];
   const handleSignUp = [
     validateUser,
     async (req, res) => {
@@ -17,10 +34,10 @@ const usersController = (() => {
       const hashedPassword = await bcrypt.hash(password, 10);
       const result = await query.addNewUser(username, email, hashedPassword);
       if (!result.success) {
-        req.flash('signupError', result.message);
-        return res.redirect('/sign-up');
+        req.flash("signupError", result.message);
+        return res.redirect("/sign-up");
       }
-      return res.redirect("/");
+      return res.redirect("/log-in");
     },
   ];
   const makeUserAdmin = [
@@ -43,7 +60,7 @@ const usersController = (() => {
       }
     },
   ];
-  return { handleSignUp, makeUserAdmin };
+  return { handleSignUp, makeUserAdmin, handleLogin };
 })();
 
 export default usersController;

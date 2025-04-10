@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap");
+
 :root {
   --body: #021526;
   --message: var(--body);
@@ -9,42 +10,68 @@
   --button-text: var(--text);
   --header-title: #e2e2b6;
 }
+
 html {
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   color: var(--text);
+  scroll-behavior: smooth;
 }
+
 body {
-  margin: 0px;
+  margin: 0;
   background-color: var(--body);
 }
+
 .main {
   padding-left: 16px;
   padding-right: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
-  font-family: "DM Serif Display";
+  font-family: "DM Serif Display", serif;
   padding: 16px;
   align-items: center;
+  background-color: var(--body);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
 }
+
+.header:hover {
+  transform: translateY(-3px);
+}
+
 .header-title {
   font-weight: bold;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
+
+.header-title:hover {
+  color: var(--header-title);
+}
+
 .messages-title {
   font-size: 1rem;
 }
+
 .message-title {
   font-size: 1.3rem;
   font-weight: bold;
 }
+
 .messages-container {
   display: grid;
   gap: 8px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  transition: grid-template-columns 0.3s ease-in-out;
 }
+
 .message {
   padding: 16px;
   -webkit-box-shadow: 7px 8px 5px -3px rgba(0, 0, 0, 0.47);
@@ -56,7 +83,14 @@ body {
   background-color: var(--message);
   border: 1px solid var(--message-border);
   border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.message:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
 button {
   all: unset;
   background-color: var(--button-bg);
@@ -67,47 +101,127 @@ button {
   border-radius: 8px;
   cursor: pointer;
   width: fit-content;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+button:hover {
+  background-color: #002d53;
+  transform: scale(1.05);
+}
+
 .message-delete-btn {
   padding: 4px 8px 4px 8px;
 }
+
 .welcome-text {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
-input {
+
+input,
+textarea {
   all: unset;
   background-color: var(--body);
   color: var(--text);
   border: 2px solid;
   border-radius: 8px;
   border-color: var(--message-border);
+  padding: 8px;
+  transition: all 0.3s ease;
 }
+
 textarea {
-  background-color: var(--body);
-  color: var(--text);
-  border: 2px solid;
-  border-radius: 8px;
-  border-color: var(--message-border);
   width: fit-content;
 }
+
+input:focus,
+textarea:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 5px #0066cc;
+}
+
 .messages-title {
   font-size: 1.5rem;
   margin: 8px;
 }
+
 .log-in-text,
 .sign-up-text {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
+
 .message-form {
   display: flex;
   flex-direction: column;
 }
+
 .control-panel {
   display: flex;
   justify-content: flex-start;
   gap: 2rem;
+}
+
+.control-user-section {
+  flex: 1;
+}
+
+.message-add-section {
+  flex: 1;
+  margin-left: 2rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 40%;
+}
+
+button {
+  display: inline-block;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form textarea {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--message-border);
+}
+
+button {
+  padding: 8px 18px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #002d53;
+  transform: scale(1.05);
+}
+
+/* 404 Page */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text);
+  margin-top: 50px;
+}
+.become-admin{
+  margin-bottom: 12px;
 }

@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/styles/index.css" />
   </head>
   <body>
-
     <%- include("./partials/header.ejs", {btn: false}) %>
     <div class="main">
       <div class="log-in-text">Log in</div>
-      <% if (messages.length > 0) { %>
+      <%- include("partials/errors.ejs") %>
+      <% if (locals.messages) { %>
       <div class="error">
         <% messages.forEach(message => { %>
         <p><%= message %></p>

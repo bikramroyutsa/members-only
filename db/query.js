@@ -10,7 +10,7 @@ const query = (() => {
         VALUES ($1, $2, $3, $4) `,
         [username, email, password, isAdmin]
       );
-      return "success";
+      return { success: true, message: "success" };
     } catch (err) {
       console.error(err); // Log for debugging
       if (err.code === "23505") {

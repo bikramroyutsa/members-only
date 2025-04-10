@@ -4,13 +4,13 @@ import pg from "pg";
 const { Client } = pg;
 
 const SQL = `
-    CREATE TABLE IF NOT EXISTS users(
+    CREATE TABLE users(
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(255) unique,
     email VARCHAR(255) unique,
     password TEXT,
     isadmin BOOLEAN
-    )
+    );
 
     CREATE TABLE messages (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -23,7 +23,7 @@ const SQL = `
 async function main() {
   console.log("seeding");
   const client = new Client({
-    connectionString: process.env.CONNECTION_STRING_LOCAL,
+    connectionString: process.env.CONNECTION_STRING,
   });
   await client.connect();
   await client.query(SQL);
