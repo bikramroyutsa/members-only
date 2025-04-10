@@ -3,12 +3,22 @@ import pool from "./pool.js";
 const query = (() => {
   async function addNewUser(username, email, password) {
     const isAdmin = "FALSE";
-    await pool.query(
-      `
-      INSERT INTO users (username, email, password, isadmin) 
-      VALUES ($1, $2, $3, $4)`,
-      [username, email, password, isAdmin]
-    );
+    try {
+      const user = await pool.query(
+        `
+        INSERT INTO users (username, email, password, isadmin) 
+        VALUES ($1, $2, $3, $4) `,
+        [username, email, password, isAdmin]
+      );
+      return "success";
+    } catch (err) {
+      console.error(err); // Log for debugging
+      if (err.code === "23505") {
+        return { success: false, message: "Username or Email already exists" };
+      } else {
+        return { success: false, message: "Unexpected database error" };
+      }
+    }
   }
   async function addMessage(message, user_id) {
     await pool.query(

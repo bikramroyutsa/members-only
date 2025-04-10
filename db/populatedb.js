@@ -11,6 +11,14 @@ const SQL = `
     password TEXT,
     isadmin BOOLEAN
     )
+
+    CREATE TABLE messages (
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
 `;
 async function main() {
   console.log("seeding");

@@ -16,13 +16,14 @@ import flash from "connect-flash";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const assetspath = path.join(__dirname, "public");
+
 app.use(express.static(assetspath));
 app.set("view engine", "ejs");
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(flash());
 app.use(passport.session());
-app.use(express.json()); // For JSON data
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
@@ -36,7 +37,7 @@ passport.use(
       );
       const user = rows[0];
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: "No user found with this username" });
       }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {

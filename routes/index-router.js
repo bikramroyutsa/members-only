@@ -11,7 +11,11 @@ indexRouter.get("/", async (req, res) => {
 indexRouter.get("/log-in", (req, res) => {
   res.render("log-in-form", { messages: req.flash("error"), user: req.user });
 });
-indexRouter.get("/sign-up", (req, res) => res.render("sign-up-form"));
+indexRouter.get("/sign-up", (req, res) =>
+  res.render("sign-up-form", {
+    messages: req.flash("signupError"),
+  })
+);
 
 indexRouter.post("/sign-up", usersController.handleSignUp);
 indexRouter.post(

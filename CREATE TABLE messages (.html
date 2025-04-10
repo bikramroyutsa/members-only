@@ -1,0 +1,13 @@
+CREATE TABLE messages ( id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+user_id INT REFERENCES users(id) ON DELETE CASCADE, message TEXT NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); <% if(locals.user.isadmin){ %>
+<form action="/<%= message.id %>/delete" method="post">
+  <button>Delete</button>
+</form>
+<% } %> <% else if (locals.user.id == message.user_id){ %>
+<form action="/<%= message.id %>/delete" method="post">
+  <button>Delete</button>
+</form>
+<% } %> <% else{ %>
+<div>you cannot deelte</div>
+<% } %>

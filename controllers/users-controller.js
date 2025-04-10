@@ -1,7 +1,7 @@
 import { validateUser, validateAdmin } from "./validation.js";
 import { validationResult } from "express-validator";
 import query from "../db/query.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 import pool from "../db/pool.js";
 const usersController = (() => {
   const handleSignUp = [
@@ -15,8 +15,12 @@ const usersController = (() => {
       }
       const { username, password, email } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
-      await query.addNewUser(username, email, hashedPassword);
-      res.redirect("/");
+      const result = await query.addNewUser(username, email, hashedPassword);
+      if (!result.success) {
+        req.flash('signupError', result.message);
+        return res.redirect('/sign-up');
+      }
+      return res.redirect("/");
     },
   ];
   const makeUserAdmin = [
@@ -33,10 +37,9 @@ const usersController = (() => {
           userId,
         ]);
         res.redirect("/");
-      }
-      else{
-        req.flash('adminErrorMsg', 'Wrong passkey')
-        res.redirect("/admin")
+      } else {
+        req.flash("adminErrorMsg", "Wrong passkey");
+        res.redirect("/admin");
       }
     },
   ];

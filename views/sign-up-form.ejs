@@ -8,9 +8,16 @@
   </head>
   <body>
     <%- include("./partials/header.ejs", {btn: false}) %>
+
     <div class="main">
       <div class="sign-up-text">Sign up</div>
-      <%- include("partials/errors.ejs") %>
+      <% if (locals.messages) { %>
+      <ul class="error">
+        <% messages.forEach(message => { %>
+        <li><%= message %></li>
+        <% }); %>
+      </ul>
+      <% } %> <%- include("partials/errors.ejs") %>
       <form action="/sign-up" method="POST">
         <label for="username">Username: </label>
         <input type="text" name="username" id="username" />
